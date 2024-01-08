@@ -1,0 +1,72 @@
+<style>
+  .custom-card {
+    border: 2px solid #5bc0de;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(45deg, #5bc0de, #81c9d4);
+  }
+
+  .custom-card .card-header {
+    border-bottom: 2px solid #5bc0de;
+  }
+
+  .custom-card .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+
+  .custom-card .btn-success:hover {
+    filter: brightness(90%);
+  }
+
+  body {
+    background-color: #f0f0f0;
+  }
+</style>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card custom-card">
+        <div class="card-header bg-info text-white text-center">
+          <h2 class="mb-0">Register <i class="fas fa-user-plus"></i></h2>
+        </div>
+        <div class="card-body">
+          <% if (errors && errors.length > 0) { %>
+            <div class="alert alert-danger" role="alert" id="validationAlert">
+              <ul class="mb-0">
+                <% errors.forEach(error => { %>
+                  <li><%= error.msg %></li>
+                <% }) %>
+              </ul>
+              <script>
+                // Automatically hide the alert after 2000 milliseconds (2 seconds)
+                setTimeout(function() {
+                  document.getElementById('validationAlert').style.display = 'none';
+                }, 2000);
+              </script>
+            </div>
+          <% } %>
+          <!-- Registration form -->
+          <form action="/" method="post">
+            <div class="mb-3">
+              <label for="name" class="form-label"><i class="fas fa-user"></i> Username</label>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Enter your username">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label"><i class="fas fa-envelope"></i> Email</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label"><i class="fas fa-lock"></i> Password</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+            </div>
+
+            <p class="text-center">Already have an account? <a href="/login">Login</a></p>
+            <button type="submit" class="btn btn-success btn-block"><i class="fas fa-check"></i> Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

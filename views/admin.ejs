@@ -1,0 +1,93 @@
+<!-- Employee Management Page (employeeManagement.ejs) -->
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Employee Management</h2>
+  
+    <% employees.forEach(employee => { %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title"><i class="fas fa-user"></i> <%= employee.name %></h5>
+          <p class="card-text"><i class="fas fa-envelope"></i> Email: <%= employee.email %></p>
+          <button type="button" class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#updateEmployeeModal<%= employee._id %>">
+            <i class="fas fa-edit"></i> Update
+          </button>
+          <form action="/admin/delete/<%= employee._id %>" method="post" class="d-inline-block me-2">
+            <!-- Delete employee form -->
+            <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</button>
+          </form>
+          <form action="/admin/grant-admin-access/<%= employee._id %>" method="post" class="d-inline-block me-2">
+            <!-- Grant Admin Access form -->
+            <button type="submit" class="btn btn-primary"><i class="fas fa-key"></i> Grant Admin Access</button>
+          </form>
+          <!-- Assign Review Button with Modal -->
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#assignReviewModal<%= employee._id %>">
+            <i class="fas fa-sticky-note"></i> Assign Review
+          </button>
+  
+          <!-- Update Employee Modal -->
+          <div class="modal fade" id="updateEmployeeModal<%= employee._id %>" tabindex="-1" aria-labelledby="updateEmployeeModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="updateEmployeeModalLabel">Update Employee Information</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <!-- Update employee form with employee info -->
+                  <form action="/admin/update/<%= employee._id %>" method="post">
+                    <div class="mb-3">
+                      <label for="name"><i class="fas fa-user"></i> Name:</label>
+                      <input type="text" class="form-control" id="name" name="name" value="<%= employee.name %>" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="email"><i class="fas fa-envelope"></i> Email:</label>
+                      <input type="email" class="form-control" id="email" name="email" value="<%= employee.email %>" required>
+                    </div>
+                    <button type="submit" class="btn btn-warning"><i class="fas fa-edit"></i> Update</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- Assign Review Modal -->
+          <div class="modal fade" id="assignReviewModal<%= employee._id %>" tabindex="-1" aria-labelledby="assignReviewModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="assignReviewModalLabel">Assign Review</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <!-- Assign review form with reviewer and recipient dropdowns -->
+                  <form action="/admin/assign-review/<%= employee._id %>" method="post">
+                    <div class="mb-3">
+                      <label for="reviewer"><i class="fas fa-user"></i> Reviewer:</label>
+                      <input type="text" class="form-control" id="reviewer" name="reviewer" value="<%= employee.name %>" readonly>
+                    </div>
+                    <div class="mb-3">
+                      <label for="recipient"><i class="fas fa-user"></i> Select Recipient:</label>
+                      <select class="form-select" id="recipient" name="recipient" required>
+                        <% employees.forEach(otherEmployee => { %>
+                          <% if (otherEmployee._id !== employee._id) { %>
+                            <option value="<%= otherEmployee._id %>"><%= otherEmployee.name %></option>
+                          <% } %>
+                        <% }); %>
+                      </select>
+                    </div>
+                    <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Assign Review</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  
+    <!-- Add any additional content or forms as needed -->
+  
+  </div>
+  
+  <!-- Include Bootstrap JS and Popper.js -->
+ 

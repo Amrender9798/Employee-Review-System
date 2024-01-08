@@ -1,0 +1,40 @@
+<!-- user.ejs -->
+
+<div class="container mt-5">
+  <!-- Display recipients with a button to send feedback -->
+  <h2 class="mb-4">Assigned Reviews</h2>
+  <% if (recipients.length > 0) { %>
+    <% recipients.forEach((recipient) => { %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title"><%= recipient.name %></h5>
+          <p class="card-text"><%= recipient.email %></p>
+          <form action="/<%= recipient.id %>" method="post">
+            <div class="form-group mb-2">
+              <label for="feedbackInput">Write Feedback:</label>
+              <textarea class="form-control" id="feedbackInput" name="feedback" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Feedback</button>
+          </form>
+        </div>
+      </div>
+    <% }); %>
+  <% } else { %>
+    <p>No resigned reviews available.</p>
+  <% } %>
+
+  <!-- Display reviews with feedback -->
+  <h2 class="mb-4 mt-5">Feedbacks</h2>
+  <% if (reviewsWithFeedback.length > 0) { %>
+    <% reviewsWithFeedback.forEach((review) => { %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Reviewer: <%= review.reviewerName %> (<%= review.reviewerEmail %>)</h5>
+          <p class="card-text">Feedback: <%= review.feedback %></p>
+        </div>
+      </div>
+    <% }); %>
+  <% } else { %>
+    <p>No feedbacks available.</p>
+  <% } %>
+</div>
